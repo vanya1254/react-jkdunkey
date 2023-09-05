@@ -1,75 +1,35 @@
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 import Card from "./components/Card";
-
-const sneakers = [
-  {
-    id: 1,
-    title: "Мужские Кроссовки Nike Blazer Mid Suede",
-    price: 12999,
-    photo: "/img/sneakers/1.jpg",
-  },
-  {
-    id: 2,
-    title: "Мужские Кроссовки Nike Air Max 270",
-    price: 12999,
-    photo: "/img/sneakers/2.jpg",
-  },
-  {
-    id: 3,
-    title: "Мужские Кроссовки Nike Blazer Mid Suede",
-    price: 8499,
-    photo: "/img/sneakers/3.jpg",
-  },
-  {
-    id: 4,
-    title: "Кроссовки Puma X Aka Boku Future Rider",
-    price: 8999,
-    photo: "/img/sneakers/4.jpg",
-  },
-  {
-    id: 5,
-    title: "Мужские Кроссовки Under Armour Curry 8",
-    price: 15199,
-    photo: "/img/sneakers/5.jpg",
-  },
-  {
-    id: 6,
-    title: "Мужские Кроссовки Nike Kyrie 7",
-    price: 11299,
-    photo: "/img/sneakers/6.jpg",
-  },
-  {
-    id: 7,
-    title: "Мужские Кроссовки Jordan Air Jordan 11",
-    price: 10799,
-    photo: "/img/sneakers/7.jpg",
-  },
-  {
-    id: 8,
-    title: "Мужские Кроссовки Nike LeBron XVIII",
-    price: 16499,
-    photo: "/img/sneakers/8.jpg",
-  },
-  {
-    id: 9,
-    title: "Мужские Кроссовки Nike Lebron XVIII Low",
-    price: 13999,
-    photo: "/img/sneakers/9.jpg",
-  },
-  {
-    id: 10,
-    title: "Мужские Кроссовки Nike Kyrie Flytrap IV",
-    price: 11299,
-    photo: "/img/sneakers/10.jpg",
-  },
-];
+import React from "react";
 
 function App() {
+  const [sneakers, setSneakers] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
+  const [cartOpened, setCartOpened] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch("https://64e491d8c5556380291370e6.mockapi.io/sneakers")
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setSneakers(json);
+      });
+  }, []);
+
+  const onClickCart = () => {
+    setCartOpened(!cartOpened);
+  };
+
+  const onAddToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+  };
+
   return (
     <div className="wrapper clear">
-      <Drawer />
-      <Header />
+      {cartOpened && <Drawer items={cartItems} onClickOut={onClickCart} />}
+      <Header onClickCart={onClickCart} />
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
           <h1>Все кроссовки</h1>
@@ -78,15 +38,16 @@ function App() {
             <input placeholder="Поиск..." />
           </div>
         </div>
-        <div className="d-flex">
-          {sneakers.map((obj, key) => (
+        <div className="cards d-flex flex-wrap">
+          {sneakers.map((item, key) => (
             <Card
               key={key}
-              id={obj.id}
-              title={obj.title}
-              price={obj.price}
-              photo={obj.photo}
-              onClickPlus={() => obj}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              photo={item.photo}
+              onPlus={(obj) => onAddToCart(obj)}
+              onFavorite={() => item}
             />
           ))}
         </div>

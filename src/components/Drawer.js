@@ -1,26 +1,29 @@
-function Drawer() {
+function Drawer({ onClickOut, items = [] }) {
   return (
-    <div style={{ display: "none" }} className="overlay">
+    <div className="overlay">
+      <div onClick={onClickOut} className="overlay-reset"></div>
       <div className="drawer">
         <h2 className="mb-30">Корзина</h2>
         <div className="items">
-          <div className="cartItem d-flex align-center mb-20">
-            <div
-              style={{ backgroundImage: "url(/img/sneakers/1.jpg)" }}
-              className="cartItemImage mr-20"
-            ></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Blazer Mid Suede</p>
-              <b>12 999 руб.</b>
+          {items.map((obj, key) => (
+            <div key={key} className="cartItem d-flex align-center mb-20">
+              <div
+                style={{ backgroundImage: `url(${obj.photo})` }}
+                className="cartItemImage mr-20"
+              ></div>
+              <div className="mr-20 flex">
+                <p className="mb-5">{obj.title}</p>
+                <b>{obj.price} руб.</b>
+              </div>
+              <img
+                className="removeBtn"
+                width={32}
+                height={32}
+                src="/img/btn-remove.svg"
+                alt="Remove"
+              />
             </div>
-            <img
-              className="removeBtn"
-              width={32}
-              height={32}
-              src="/img/btn-remove.svg"
-              alt="Remove"
-            />
-          </div>
+          ))}
         </div>
         <div className="cartTotalBlock">
           <ul>
