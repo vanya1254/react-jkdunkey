@@ -47,6 +47,16 @@ header {
     border: 0;
     font-size: 14px;
   }
+
+  .clear {
+    transition: 0.2s ease-in-out;
+  }
+  .clear:hover {
+    transform: translateY(-2px);
+  }
+  .clear:active {
+    transform: translateY(2px);
+  }
 }
 
 .overlay {
@@ -148,6 +158,34 @@ header {
   &:active {
     background: darken(#9dd458, 5%);
   }
+}
+
+.cartEmpty {
+  text-align: center;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+
+  // .greenButton {
+  //   width: 245px;
+  //   margin-top: 20px;
+
+  //   &:hover {
+  //     img {
+  //       transform: rotate(180deg) translateX(3px);
+  //     }
+  //   }
+
+  //   img {
+  //     position: relative;
+  //     top: 1px;
+  //     transform: rotate(180deg);
+  //     margin-right: 15px;
+  //     transition: transform 0.15s ease-in-out;
+  //   }
+  // }
 }
 
 .cartItem {
