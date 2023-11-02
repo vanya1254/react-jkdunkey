@@ -1,15 +1,32 @@
+import React from "react";
 import Card from "../components/Card";
 import { LiaTrashAltSolid } from "react-icons/lia";
 
 function Home({
-  cartItems,
   searchValue,
   onChangeSearchInput,
   onClickClear,
   sneakers,
   onAddToCart,
   onAddToFavorite,
+  isLoading,
 }) {
+  const renderItems = () => {
+    const filtredSneakers = sneakers.filter((sneaker) =>
+      sneaker.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    return (isLoading ? [...Array(12)] : filtredSneakers).map((item, index) => (
+      <Card
+        key={index}
+        onPlus={(obj) => onAddToCart(obj)}
+        onFavorite={(obj) => onAddToFavorite(obj)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
+  };
+
   return (
     <div className="content p-40">
       <div className="d-flex align-center justify-between mb-40">
@@ -28,24 +45,7 @@ function Home({
           )}
         </div>
       </div>
-      <div className="cards d-flex flex-wrap">
-        {sneakers
-          .filter((sneaker) =>
-            sneaker.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <Card
-              key={index}
-              onPlus={(obj) => onAddToCart(obj)}
-              onFavorite={(obj) => onAddToFavorite(obj)}
-              added={cartItems.some(
-                (obj) => Number(obj.id) === Number(item.id)
-              )}
-              loading={true}
-              {...item}
-            />
-          ))}
-      </div>
+      <div className="cards d-flex flex-wrap">{renderItems()}</div>
     </div>
   );
 }

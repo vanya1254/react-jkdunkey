@@ -151,6 +151,10 @@ header {
   cursor: pointer;
   transition: 0.2s ease-in-out;
 
+  &:disabled {
+    animation: loading-button 1.8s ease-in-out infinite;
+  }
+
   &:hover {
     background: lighten(#9dd458, 5%);
   }
@@ -222,4 +226,22 @@ header {
 
 .cards {
   gap: 40px;
+}
+
+@keyframes loading-button {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
 }

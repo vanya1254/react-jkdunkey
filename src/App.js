@@ -5,6 +5,7 @@ import Wishlist from "./pages/Wishlist";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
+import AppContext from "./context";
 
 function App() {
   const [sneakers, setSneakers] = React.useState([]);
@@ -12,9 +13,12 @@ function App() {
   const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
+
       const sneakersResponse = await axios.get(
         "https://64e491d8c5556380291370e6.mockapi.io/sneakers"
       );
@@ -24,6 +28,8 @@ function App() {
       // const wishlistResponse = await axios.get(
       //   "https://64e491d8c5556380291370e6.mockapi.io/wishlist"
       // );
+
+      setIsLoading(false);
 
       setCartItems(cartResponse.data);
       // setFavorites(wishlistResponse.data);
@@ -39,9 +45,12 @@ function App() {
 
   const onAddToFavorite = async (item) => {
     try {
-      if (favorites.find((favItem) => favItem.id === item.id)) {
+      if (favorites.find((favItem) => Number(favItem.id) === Number(item.id))) {
         axios.delete(
           `https://64e491d8c5556380291370e6.mockapi.io/wishlist/${item.id}`
+        );
+        setFavorites((prev) =>
+          prev.filter((favItem) => Number(favItem.id) !== Number(item.id))
         );
       } else {
         const { data } = await axios.post(
@@ -88,55 +97,59 @@ function App() {
     setSearchValue("");
   };
 
-  return (
-    <div className="wrapper clear">
-      {cartOpened && (
-        <Drawer
-          items={cartItems}
-          onClickRemove={onRemoveItem}
-          onClickOut={onClickCart}
-        />
-      )}
-      <Header onClickWishlist={""} onClickCart={onClickCart} />
+  const isItemAdded = (id) => {
+    return cartItems.some((item) => Number(item.id) === Number(id));
+  };
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              cartItems={cartItems}
-              sneakers={sneakers}
-              searchValue={searchValue}
-              setSearchValue={setSearchValue}
-              onChangeSearchInput={onChangeSearchInput}
-              onAddToCart={onAddToCart}
-              onAddToFavorite={onAddToFavorite}
-              onClickClear={onClickClear}
-            />
-          }
-        ></Route>
-        <Route
-          path="/wishlist"
-          element={
-            <Wishlist
-              favorites={favorites}
-              onAddToCart={onAddToCart}
-              onAddToFavorite={onAddToFavorite}
-            />
-          }
-        ></Route>
-        <Route
-          path="/orders"
-          element={
-            <Wishlist
-              favorites={favorites}
-              onAddToCart={onAddToCart}
-              onAddToFavorite={onAddToFavorite}
-            />
-          }
-        ></Route>
-      </Routes>
-    </div>
+  return (
+    <AppContext.Provider
+      value={{
+        sneakers,
+        favorites,
+        cartItems,
+        isItemAdded,
+        onAddToFavorite,
+        setCartItems,
+      }}
+    >
+      <div className="wrapper clear">
+        {cartOpened && (
+          <Drawer
+            items={cartItems}
+            onClickRemove={onRemoveItem}
+            onClickOut={onClickCart}
+          />
+        )}
+        <Header onClickWishlist={""} onClickCart={onClickCart} />
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                sneakers={sneakers}
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+                onChangeSearchInput={onChangeSearchInput}
+                onAddToCart={onAddToCart}
+                onClickClear={onClickClear}
+                isLoading={isLoading}
+              />
+            }
+          ></Route>
+          <Route
+            path="/wishlist"
+            element={<Wishlist onAddToCart={onAddToCart} />}
+          ></Route>
+          <Route
+            path="/orders"
+            element={
+              <Wishlist favorites={favorites} onAddToCart={onAddToCart} />
+            }
+          ></Route>
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 }
 
