@@ -1,7 +1,10 @@
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+
 import Home from "./pages/Home";
 import Wishlist from "./pages/Wishlist";
+import Orders from "./pages/Orders";
+
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
@@ -109,17 +112,19 @@ function App() {
         cartItems,
         isItemAdded,
         onAddToFavorite,
+        onAddToCart,
         setCartItems,
       }}
     >
       <div className="wrapper clear">
-        {cartOpened && (
+        {
           <Drawer
             items={cartItems}
             onClickRemove={onRemoveItem}
             onClickOut={onClickCart}
+            opened={cartOpened}
           />
-        )}
+        }
         <Header onClickWishlist={""} onClickCart={onClickCart} />
 
         <Routes>
@@ -137,16 +142,8 @@ function App() {
               />
             }
           ></Route>
-          <Route
-            path="/wishlist"
-            element={<Wishlist onAddToCart={onAddToCart} />}
-          ></Route>
-          <Route
-            path="/orders"
-            element={
-              <Wishlist favorites={favorites} onAddToCart={onAddToCart} />
-            }
-          ></Route>
+          <Route path="/wishlist" element={<Wishlist />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
         </Routes>
       </div>
     </AppContext.Provider>
