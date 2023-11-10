@@ -41,7 +41,7 @@ function Header(props) {
           <span className="d-flex">{totalPrice} руб.</span>
         </li>
         <li className="d-flex mr-20 cu-p">
-          <Link to={"/wishlist"}>
+          <Link to={"react-jkdunkey/wishlist"}>
             <img
               width="18"
               height="18"
@@ -52,7 +52,7 @@ function Header(props) {
           </Link>
         </li>
         <li className="d-flex">
-          <Link to={"/orders"}>
+          <Link to={"react-jkdunkey/orders"}>
             <img
               width="18"
               height="18"
