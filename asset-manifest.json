@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-jkdunkey/static/css/main.1980bce5.css",
-    "main.js": "/react-jkdunkey/static/js/main.121e0948.js",
+    "main.js": "/react-jkdunkey/static/js/main.420a0d85.js",
     "index.html": "/react-jkdunkey/index.html",
     "main.1980bce5.css.map": "/react-jkdunkey/static/css/main.1980bce5.css.map",
-    "main.121e0948.js.map": "/react-jkdunkey/static/js/main.121e0948.js.map"
+    "main.420a0d85.js.map": "/react-jkdunkey/static/js/main.420a0d85.js.map"
   },
   "entrypoints": [
     "static/css/main.1980bce5.css",
-    "static/js/main.121e0948.js"
+    "static/js/main.420a0d85.js"
   ]
 }
