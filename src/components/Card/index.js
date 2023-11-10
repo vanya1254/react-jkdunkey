@@ -51,8 +51,8 @@ function Card({
               height={32}
               src={
                 isFavorite
-                  ? "/img/heart-activated.svg"
-                  : "/img/heart-deactivated.svg"
+                  ? "img/heart-activated.svg"
+                  : "img/heart-deactivated.svg"
               }
               alt="Add to wishlist"
               onClick={onClickFavorite}
@@ -70,7 +70,7 @@ function Card({
                 className={styles.plus}
                 onClick={onClickPlus}
                 src={
-                  isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"
+                  isItemAdded(id) ? "img/btn-checked.svg" : "img/btn-plus.svg"
                 }
                 alt="Add to cart"
               />

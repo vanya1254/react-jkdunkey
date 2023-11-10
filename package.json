@@ -2,7 +2,7 @@
   "name": "react-jkdunkey",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vanya1254.github.io/react-jkdunkey/",
+  "homepage": "https://vanya1254.github.io/react-jkdunkey",
   "dependencies": {
     "axios": "^1.5.0",
     "classnames": "^2.3.2",

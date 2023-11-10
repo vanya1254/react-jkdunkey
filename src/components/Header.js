@@ -10,7 +10,7 @@ function Header(props) {
     <header className="d-flex justify-between align-center p-40">
       <Link to={"/"}>
         <div className="d-flex align-center">
-          <img width={40} height={40} src="/img/logo.png" alt="Logo JKDunkey" />
+          <img width={40} height={40} src="img/logo.png" alt="Logo JKDunkey" />
           <div>
             <h3 className="text-uppercase">JKDunkey</h3>
             <p className="opacity-5">Магазин лучших кроссовок</p>
@@ -19,14 +19,14 @@ function Header(props) {
       </Link>
       {/* <ul className="d-flex">
         <li className="mr-30">
-          <img width={18} height={18} src="/img/cart.svg" alt="Cart" />
+          <img width={18} height={18} src="img/cart.svg" alt="Cart" />
           <span>1205 руб.</span>
         </li>
         <li className="mr-30">
-          <img width={18} height={18} src="/img/wish.svg" alt="Wishlist" />
+          <img width={18} height={18} src="img/wish.svg" alt="Wishlist" />
         </li>
         <li>
-          <img width={18} height={18} src="/img/user.svg" alt="Profile" />
+          <img width={18} height={18} src="img/user.svg" alt="Profile" />
         </li>
       </ul> */}
       <ul className="d-flex justify-between">
@@ -34,7 +34,7 @@ function Header(props) {
           <img
             width="18"
             height="18"
-            src="/img/cart.svg"
+            src="img/cart.svg"
             alt="Cart"
             className="d-flex"
           />
@@ -45,7 +45,7 @@ function Header(props) {
             <img
               width="18"
               height="18"
-              src="/img/wish.svg"
+              src="img/wish.svg"
               alt="Wishlist"
               className="d-flex mr-5"
             />
@@ -56,7 +56,7 @@ function Header(props) {
             <img
               width="18"
               height="18"
-              src="/img/user.svg"
+              src="img/user.svg"
               alt="Profile"
               className="d-flex"
             />

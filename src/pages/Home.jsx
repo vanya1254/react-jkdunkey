@@ -34,7 +34,7 @@ function Home({
           {searchValue ? `Поиск по запросу: "${searchValue}"` : "Все кроссовки"}
         </h1>
         <div className="search-block d-flex align-center justify-center">
-          <img width={18} height={18} src="/img/search.svg" alt="search" />
+          <img width={18} height={18} src="img/search.svg" alt="search" />
           <input
             onChange={onChangeSearchInput}
             placeholder="Поиск..."

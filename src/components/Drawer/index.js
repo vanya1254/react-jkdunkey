@@ -66,7 +66,7 @@ function Drawer({ onClickRemove, onClickOut, items = [], opened }) {
                     className="removeBtn"
                     width={32}
                     height={32}
-                    src="/img/btn-remove.svg"
+                    src="img/btn-remove.svg"
                     alt="Remove"
                   />
                 </div>
@@ -90,16 +90,14 @@ function Drawer({ onClickRemove, onClickOut, items = [], opened }) {
                 onClick={onClickOrder}
                 className={classNames("greenButton", styles.greenButton)}
               >
-                Оформить заказ <img src="/img/arrow.svg" alt="Order" />
+                Оформить заказ <img src="img/arrow.svg" alt="Order" />
               </button>
             </div>
           </div>
         ) : (
           <Info
             image={
-              isOrderComplete
-                ? "/img/complete-order.jpg"
-                : "/img/empty-cart.jpg"
+              isOrderComplete ? "img/complete-order.jpg" : "img/empty-cart.jpg"
             }
             title={isOrderComplete ? "Заказ оформлен!" : "Корзина пустая"}
             description={
