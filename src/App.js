@@ -155,7 +155,7 @@ function App() {
 
         <Routes>
           <Route
-            path=""
+            path="react-jkdunkey"
             element={
               <Home
                 sneakers={sneakers}
@@ -168,8 +168,8 @@ function App() {
               />
             }
           ></Route>
-          <Route path="wishlist" element={<Wishlist />}></Route>
-          <Route path="orders" element={<Orders />}></Route>
+          <Route path="react-jkdunkey/wishlist" element={<Wishlist />}></Route>
+          <Route path="react-jkdunkey/orders" element={<Orders />}></Route>
         </Routes>
       </div>
     </AppContext.Provider>
