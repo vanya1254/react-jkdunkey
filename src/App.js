@@ -25,14 +25,14 @@ function App() {
 
         const [sneakersResponse, cartResponse, wishlistResponse] =
           await Promise.all([
-            axios.get("https://64e491d8c5556380291370e6.mockapi.io/sneakers"),
-            axios.get("https://64e491d8c5556380291370e6.mockapi.io/cart"),
-            // axios.get("https://64e491d8c5556380291370e6.mockapi.io/wishlist"),
+            axios.get("https://1bf8f65e61b65be1.mokky.dev/sneakers"),
+            axios.get("https://1bf8f65e61b65be1.mokky.dev/cart"),
+            axios.get("https://1bf8f65e61b65be1.mokky.dev/wishlist"),
           ]);
 
         setIsLoading(false);
         setCartItems(cartResponse.data);
-        // setFavorites(wishlistResponse.data);
+        setFavorites(wishlistResponse.data);
         setSneakers(sneakersResponse.data);
       } catch (error) {
         alert("Ошибка при запросе данных");
@@ -50,15 +50,13 @@ function App() {
   const onAddToFavorite = async (item) => {
     try {
       if (favorites.find((favItem) => Number(favItem.id) === Number(item.id))) {
-        axios.delete(
-          `https://64e491d8c5556380291370e6.mockapi.io/wishlist/${item.id}`
-        );
+        axios.delete(`https://1bf8f65e61b65be1.mokky.dev/wishlist/${item.id}`);
         setFavorites((prev) =>
           prev.filter((favItem) => Number(favItem.id) !== Number(item.id))
         );
       } else {
         const { data } = await axios.post(
-          "https://64e491d8c5556380291370e6.mockapi.io/wishlist",
+          "https://1bf8f65e61b65be1.mokky.dev/wishlist",
           item
         );
         setFavorites((prev) => [...prev, data]);
@@ -81,12 +79,12 @@ function App() {
           )
         );
         await axios.delete(
-          `https://64e491d8c5556380291370e6.mockapi.io/cart/${findItem.id}`
+          `https://1bf8f65e61b65be1.mokky.dev/cart/${findItem.id}`
         );
       } else {
         setCartItems((prev) => [...prev, item]);
         const { data } = await axios.post(
-          "https://64e491d8c5556380291370e6.mockapi.io/cart",
+          "https://1bf8f65e61b65be1.mokky.dev/cart",
           item
         );
         setCartItems((prev) =>
@@ -108,7 +106,7 @@ function App() {
 
   const onRemoveItem = (id) => {
     try {
-      axios.delete(`https://64e491d8c5556380291370e6.mockapi.io/cart/${id}`);
+      axios.delete(`https://1bf8f65e61b65be1.mokky.dev/cart/${id}`);
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(id))
       );
