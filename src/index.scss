@@ -28,9 +28,21 @@ header {
   p {
     margin: 0 auto;
   }
+
+  @media (max-width: 560px) {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 }
 
 .content {
+  .top {
+    @media (max-width: 560px) {
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+
   h1 {
     margin: 0;
   }
@@ -146,6 +158,8 @@ header {
 
 .cards {
   gap: 40px;
+
+  justify-content: center;
 }
 
 @keyframes loading-button {
