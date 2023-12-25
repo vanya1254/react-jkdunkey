@@ -3,10 +3,16 @@ import axios from "axios";
 
 import Card from "../components/Card";
 import AppContext from "../context";
+import { WishCartItemType } from "../App";
 
-function Orders() {
+type OrderType = {
+  items: WishCartItemType[];
+  id: number;
+};
+
+const Orders: React.FC = () => {
   const { onAddToFavorite, onAddToCart } = React.useContext(AppContext);
-  const [orders, setOrders] = React.useState();
+  const [orders, setOrders] = React.useState<OrderType[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -18,7 +24,14 @@ function Orders() {
           "https://1bf8f65e61b65be1.mokky.dev/orders"
         );
 
-        setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+        // const data: OrderType[] = res.data;
+
+        setOrders(
+          data.reduce(
+            (prev: OrderType[], obj: OrderType) => [...prev, ...obj.items],
+            []
+          )
+        );
         setIsLoading(false);
       } catch (error) {
         alert("Ошибка при загрузке заказов");
@@ -35,8 +48,8 @@ function Orders() {
         {(isLoading ? [...Array(8)] : orders).map((item, index) => (
           <Card
             key={index}
-            // onPlus={(obj) => onAddToCart(obj)}
             onFavorite={(obj) => onAddToFavorite(obj)}
+            onPlus={(obj) => onAddToCart(obj)}
             loading={isLoading}
             {...item}
           />
@@ -44,6 +57,6 @@ function Orders() {
       </div>
     </div>
   );
-}
+};
 
 export default Orders;

@@ -1,8 +1,20 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Card from "../components/Card";
 import { LiaTrashAltSolid } from "react-icons/lia";
 
-function Home({
+import { WishCartItemType, SneakersType } from "../App";
+
+type HomeProps = {
+  searchValue: string;
+  onChangeSearchInput: React.ChangeEventHandler<HTMLInputElement>;
+  onClickClear: MouseEventHandler<SVGElement>;
+  sneakers: SneakersType[];
+  onAddToCart: (item: WishCartItemType) => void;
+  onAddToFavorite: (item: SneakersType) => void;
+  isLoading: boolean;
+};
+
+const Home: React.FC<HomeProps> = ({
   searchValue,
   onChangeSearchInput,
   onClickClear,
@@ -10,7 +22,7 @@ function Home({
   onAddToCart,
   onAddToFavorite,
   isLoading,
-}) {
+}) => {
   const renderItems = () => {
     const filtredSneakers = sneakers.filter((sneaker) =>
       sneaker.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -48,6 +60,6 @@ function Home({
       <div className="cards d-flex flex-wrap">{renderItems()}</div>
     </div>
   );
-}
+};
 
 export default Home;

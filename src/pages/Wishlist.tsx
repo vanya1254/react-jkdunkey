@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../components/Card";
 import AppContext from "../context";
 
-function Wishlist() {
+const Wishlist = () => {
   const { favorites, onAddToFavorite, onAddToCart } =
     React.useContext(AppContext);
 
@@ -18,12 +18,13 @@ function Wishlist() {
             onPlus={(obj) => onAddToCart(obj)}
             onFavorite={(obj) => onAddToFavorite(obj)}
             favorited={true}
+            loading={false}
             {...item}
           />
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default Wishlist;

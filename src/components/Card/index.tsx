@@ -2,8 +2,20 @@ import React from "react";
 import ContentLoader from "react-content-loader";
 import styles from "./Card.module.scss";
 import AppContext from "../../context";
+import { WishCartItemType, SneakersType } from "../../App";
 
-function Card({
+type CardProps = {
+  onFavorite: (item: SneakersType) => void;
+  onPlus: (item: WishCartItemType) => void;
+  id: string;
+  title: string;
+  photo: string;
+  price: number;
+  favorited: boolean;
+  loading: boolean;
+};
+
+const Card: React.FC<CardProps> = ({
   onFavorite,
   onPlus,
   id,
@@ -12,9 +24,9 @@ function Card({
   price,
   favorited = false,
   loading = false,
-}) {
-  const { isItemAdded } = React.useContext(AppContext);
-  const [isFavorite, setIsFavorite] = React.useState(favorited);
+}) => {
+  const { isItemAdded }: any = React.useContext(AppContext);
+  const [isFavorite, setIsFavorite] = React.useState<boolean>(favorited);
   const item = { id, parentId: id, title, photo, price };
 
   const onClickPlus = () => {
@@ -65,21 +77,17 @@ function Card({
               <span>Цена:</span>
               <b>{price} руб.</b>
             </div>
-            {onPlus && (
-              <img
-                className={styles.plus}
-                onClick={onClickPlus}
-                src={
-                  isItemAdded(id) ? "img/btn-checked.svg" : "img/btn-plus.svg"
-                }
-                alt="Add to cart"
-              />
-            )}
+            <img
+              className={styles.plus}
+              onClick={onClickPlus}
+              src={isItemAdded(id) ? "img/btn-checked.svg" : "img/btn-plus.svg"}
+              alt="Add to cart"
+            />
           </div>
         </>
       )}
     </div>
   );
-}
+};
 
 export default Card;

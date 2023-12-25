@@ -10,16 +10,31 @@ import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import AppContext from "./context";
 
-function App() {
-  const [sneakers, setSneakers] = React.useState([]);
-  const [favorites, setFavorites] = React.useState([]);
-  const [cartItems, setCartItems] = React.useState([]);
-  const [cartOpened, setCartOpened] = React.useState(false);
-  const [searchValue, setSearchValue] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(true);
+export type SneakersType = {
+  id: string;
+  title: string;
+  price: number;
+  photo: string;
+};
+
+export type WishCartItemType = {
+  id: string;
+  parentId: string;
+  title: string;
+  photo: string;
+  price: number;
+};
+
+const App: React.FC = () => {
+  const [sneakers, setSneakers] = React.useState<SneakersType[]>([]);
+  const [favorites, setFavorites] = React.useState<WishCartItemType[]>([]);
+  const [cartItems, setCartItems] = React.useState<WishCartItemType[]>([]);
+  const [cartOpened, setCartOpened] = React.useState<boolean>(false);
+  const [searchValue, setSearchValue] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
 
@@ -38,7 +53,7 @@ function App() {
         alert("Ошибка при запросе данных");
         console.log(error);
       }
-    }
+    };
 
     fetchData();
   }, []);
@@ -47,19 +62,21 @@ function App() {
     setCartOpened(!cartOpened);
   };
 
-  const onAddToFavorite = async (item) => {
+  const onAddToFavorite = async (item: any) => {
     try {
-      if (favorites.find((favItem) => Number(favItem.id) === Number(item.id))) {
+      if (
+        favorites.find((favItem: any) => Number(favItem.id) === Number(item.id))
+      ) {
         axios.delete(`https://1bf8f65e61b65be1.mokky.dev/wishlist/${item.id}`);
-        setFavorites((prev) =>
-          prev.filter((favItem) => Number(favItem.id) !== Number(item.id))
+        setFavorites((prev: any) =>
+          prev.filter((favItem: any) => Number(favItem.id) !== Number(item.id))
         );
       } else {
         const { data } = await axios.post(
           "https://1bf8f65e61b65be1.mokky.dev/wishlist",
           item
         );
-        setFavorites((prev) => [...prev, data]);
+        setFavorites((prev: any) => [...prev, data]);
       }
     } catch (error) {
       alert("Не удалось добавить в фавориты");
@@ -67,7 +84,7 @@ function App() {
     }
   };
 
-  const onAddToCart = async (item) => {
+  const onAddToCart = async (item: WishCartItemType) => {
     try {
       const findItem = cartItems.find(
         (cartItem) => Number(cartItem.parentId) === Number(item.id)
@@ -95,6 +112,7 @@ function App() {
                 id: data.id,
               };
             }
+            return item;
           })
         );
       }
@@ -104,7 +122,7 @@ function App() {
     }
   };
 
-  const onRemoveItem = (id) => {
+  const onRemoveItem = (id: Number) => {
     try {
       axios.delete(`https://1bf8f65e61b65be1.mokky.dev/cart/${id}`);
       setCartItems((prev) =>
@@ -116,7 +134,7 @@ function App() {
     }
   };
 
-  const onChangeSearchInput = (event) => {
+  const onChangeSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
@@ -124,7 +142,7 @@ function App() {
     setSearchValue("");
   };
 
-  const isItemAdded = (id) => {
+  const isItemAdded = (id: number) => {
     return cartItems.some((item) => Number(item.parentId) === Number(id));
   };
 
@@ -149,7 +167,7 @@ function App() {
             opened={cartOpened}
           />
         }
-        <Header onClickWishlist={""} onClickCart={onClickCart} />
+        <Header onClickCart={onClickCart} />
 
         <Routes>
           <Route
@@ -158,10 +176,11 @@ function App() {
               <Home
                 sneakers={sneakers}
                 searchValue={searchValue}
-                setSearchValue={setSearchValue}
+                // setSearchValue={setSearchValue}
                 onChangeSearchInput={onChangeSearchInput}
                 onAddToCart={onAddToCart}
                 onClickClear={onClickClear}
+                onAddToFavorite={onAddToFavorite}
                 isLoading={isLoading}
               />
             }
@@ -172,6 +191,6 @@ function App() {
       </div>
     </AppContext.Provider>
   );
-}
+};
 
 export default App;

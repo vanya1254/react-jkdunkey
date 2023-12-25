@@ -7,29 +7,46 @@ import { useCart } from "../../hooks/useCart";
 
 import styles from "./Drawer.module.scss";
 
-const delay = (ms) =>
+import { WishCartItemType } from "../../App";
+
+type DrawerProps = {
+  onClickRemove: (id: number) => void;
+  onClickOut: () => void;
+  items: WishCartItemType[];
+  opened: boolean;
+};
+
+const delay = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
 
-function Drawer({ onClickRemove, onClickOut, items = [], opened }) {
+const Drawer: React.FC<DrawerProps> = ({
+  onClickRemove,
+  onClickOut,
+  items = [],
+  opened,
+}) => {
   const { cartItems, setCartItems, totalPrice } = useCart();
-  const [isOrderComplete, setIsOrderComplete] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isOrderComplete, setIsOrderComplete] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [orderId, setOrderId] = React.useState(null);
 
   const onClickOrder = async () => {
     try {
       setIsLoading(true);
-      //const {data} = await axios.post("https://64e491d8c5556380291370e6.mockapi.io/orders", {items: cartItems});
-      // setOrderId(data.id);
+      const { data } = await axios.post(
+        "https://1bf8f65e61b65be1.mokky.dev/orders",
+        { items: cartItems }
+      );
+      setOrderId(data.id);
       setIsOrderComplete(true);
       setCartItems([]);
 
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
         await axios.delete(
-          "https://64e491d8c5556380291370e6.mockapi.io/cart" + item.id
+          "https://1bf8f65e61b65be1.mokky.dev/cart/" + item.id
         );
         await delay(1000);
       }
@@ -59,10 +76,10 @@ function Drawer({ onClickRemove, onClickOut, items = [], opened }) {
                   ></div>
                   <div className="mr-20 flex">
                     <p className="mb-5">{obj.title}</p>
-                    <b>{obj.price} руб.</b>
+                    <b>{`${obj.price}`} руб.</b>
                   </div>
                   <img
-                    onClick={() => onClickRemove(obj.id)}
+                    onClick={() => onClickRemove(Number(obj.id))}
                     className="removeBtn"
                     width={32}
                     height={32}
@@ -110,6 +127,6 @@ function Drawer({ onClickRemove, onClickOut, items = [], opened }) {
       </div>
     </div>
   );
-}
+};
 
 export default Drawer;
