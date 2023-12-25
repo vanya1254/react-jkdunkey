@@ -2,7 +2,7 @@
   "name": "react-jkdunkey",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vanya1254.github.io/react-jkdunkey",
+  "homepage": "https://vanya1254.github.io/react-jkdunkey/",
   "dependencies": {
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
